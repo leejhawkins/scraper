@@ -43,7 +43,7 @@ app.set("view engine", "handlebars");
 mongoose.Promise = global.Promise;
 mongoose.connect(
     process.env.MONGODB_URI ||
-    "mongodb://leejhawkins:hotsauce26@ds031995.mlab.com:31995/heroku_q3cw6k5t",
+    "mongodb://"+process.env.DB_USER+":"+process.env.DB_PASS+"@ds031995.mlab.com:31995/heroku_q3cw6k5t",
     {
         useNewURLParser: true
     }
