@@ -24,7 +24,7 @@ $(document).on("click", ".note-btn", function () {
             $("#notes").append("<h5><u> Comments: </u></h5>")
             if (data.note) {
                 for (let i=0;i<data.note.length;i++) {
-                    $("#notes").append("<p> Comment:"+data.note[i].body+ "</p><br><p> Made by:"+data.note[i].title+"</p><br>")
+                    $("#notes").append("<p> "+data.note[i].title+ "</p><p class='blue lighten-5'>"+data.note[i].body+"</p><br>")
                 }
             }
             $("#notes").append("<input id='titleinput' name='title' placeholder='Name' >")
