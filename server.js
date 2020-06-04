@@ -44,8 +44,9 @@ mongoose.connect(
     process.env.MONGODB_URI ||
     "mongodb://"+process.env.DB_USER+":"+process.env.DB_PASS+"@ds031995.mlab.com:31995/heroku_q3cw6k5t",
     {
-        useNewURLParser: true
-    }
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    },
 );
 
 // Routes
