@@ -15,9 +15,8 @@ var cheerio = require("cheerio");
 
 // Require all models
 var db = require("./models");
+
 var PORT = process.env.PORT || 3000;
-
-
 
 // Initialize Express
 var app = express();
@@ -41,61 +40,70 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 // Connect to the Mongo DB
+mongoose.Promise = global.Promise;
 mongoose.connect(
     process.env.MONGODB_URI ||
-    "mongodb://"+process.env.DB_USER+":"+process.env.DB_PASS+"@ds031995.mlab.com:31995/heroku_q3cw6k5t",
+    "mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@ds031995.mlab.com:31995/heroku_q3cw6k5t",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
-    },
+    }
 );
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function (req, res) {
-    // First, we grab the body of the html with axios
-    axios.get("https://www.politifact.com/factchecks/list/?speaker=donald-trump").then(function (response) {
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var $ = cheerio.load(response.data);
+    db.Article.find({}).sort({ date: -1 }).then(function (dbArticles) {
+        axios.get("https://www.politifact.com/factchecks/list/?speaker=donald-trump").then(function (response) {
+            // Then, we load that into cheerio and save it to $ for a shorthand selector
+            var $ = cheerio.load(response.data);
+            var match = false;
+            // Now, we grab every h2 within an article tag, and do the following:
+            $("div.m-statement__content").each(function (i, element) {
+                // Save an empty result object
+                var result = {};
 
-        // Now, we grab every h2 within an article tag, and do the following:
-        $("div.m-statement__content").each(function (i, element) {
-            // Save an empty result object
-            var result = {};
+                if (dbArticles[0].title === $(this).find("a").text() || match===true) {
+                    match = true;
+                } else {
+                result.title = $(this)
+                    .find("a")
+                    .text();
+                result.link = $(this)
+                    .find("a")
+                    .attr("href");
+                result.rating = $(this)
+                    .find("picture")
+                    .children()
+                    .attr("src")
+                result.date = $(this)
+                    .find("footer")
+                    .text().split(" • ", 2)
+                console.log(result.title)
+                // Create a new Article using the `result` object built from scraping
+                db.Article.create(result)
+                    .then(function (dbArticle) {
+                        // View the added result in the console
+                        console.log(dbArticle);
+                    })
+                    .catch(function (err) {
+                        // If an error occurred, log it
+                        console.log(err);
+                    });
+                }
+            });
 
-            // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(this)
-                .find("a")
-                .text();
-            result.link = $(this)
-                .find("a")
-                .attr("href");
-            result.rating = $(this)
-                .find("picture")
-                .children()
-                .attr("src")
-            console.log(result.title)
-            // Create a new Article using the `result` object built from scraping
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    // View the added result in the console
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    // If an error occurred, log it
-                    console.log(err);
-                });
+            
+            res.send("Scrape Complete");
         });
-
-        // Send a message to the client
-        res.send("Scrape Complete");
     });
-});
+})
 
 // Route for getting all Articles from the db
 app.get("/", function (req, res) {
-    db.Article.find({}).then(function (dbArticles) {
+    db.Article.find({}).sort({ date: -1 }).then(function (dbArticles) {
+        console.log(dbArticles)
         res.render("index", {
             articles: dbArticles
         })
@@ -114,45 +122,45 @@ app.get("/articles/:id", function (req, res) {
         .then(function (dbArticle) {
             axios.get("https://www.politifact.com" + dbArticle.link).then(function (response) {
                 // Then, we load that into cheerio and save it to $ for a shorthand selector
-                
+
                 var $ = cheerio.load(response.data);
                 var summary = [];
-               
+
                 // Now, we grab every h2 within an article tag, and do the following:
                 $("div.short-on-time li").each(function (i, element) {
-                        if (!($(this).find("p").text()==="")) {
-                            summary.push($(this).find("p").text())
-                            console.log(summary)
-                               
-                        } else {
-                            summary.push($(this).text())
-                        }
-                                      
+                    if (!($(this).find("p").text() === "")) {
+                        summary.push($(this).find("p").text())
+                        console.log(summary)
+
+                    } else {
+                        summary.push($(this).text())
+                    }
+
                 });
                 $("div.short-on-time p").each(function (i, element) {
-                        var match = false;
-                        for (let j=0;j<summary.length;j++) {
-                            if ($(this).text()===summary[j]) {
-                                match = true
-                            }
+                    var match = false;
+                    for (let j = 0; j < summary.length; j++) {
+                        if ($(this).text() === summary[j]) {
+                            match = true
                         }
-                        if(!match) {
-                            summary.push($(this).text())
-                        }
+                    }
+                    if (!match) {
+                        summary.push($(this).text())
+                    }
                 });
 
-                 dbArticle = {
-                    _id : dbArticle._id,
-                    title : dbArticle.title,
-                    link : dbArticle.link,
-                    note : dbArticle.note,
-                    rating : dbArticle.rating,
-                    summary:summary
+                dbArticle = {
+                    _id: dbArticle._id,
+                    title: dbArticle.title,
+                    link: dbArticle.link,
+                    note: dbArticle.note,
+                    rating: dbArticle.rating,
+                    summary: summary
                 }
-            
+
                 res.json(dbArticle);
             });
-            
+
         })
         .catch(function (err) {
             // If an error occurred, send it to the client

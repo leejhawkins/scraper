@@ -1,25 +1,39 @@
  #notes {
-        position: sticky;
-        top: 0px;
-        padding-left: 30px;
-      }
-      textarea, input {
-        display: block;
-        width: 100%;
-        background-color: #FCF5C7;
-      }
-      input {
-        height: 36px;
-        font-size: 24px;
-      }
-      textarea {
-        height: 200px;
-        font-size: 18px;
-      }
-      .collection-item {
-        padding: 10px 0px;
-        height: 120px;
+  padding-left: 30px;
+  font-size:12px;
 
-        
-      }
+}
+h5 {
+  font-size:24px;
+}
+.title p {
+  padding-bottom:20px;
+  font-size:12px;
+}
+.note-btn {
+  float: right;
+  font-size:12px;
+}
+.pin-top {
+  position: sticky;
+  z-index: 1;
+}
+textarea, input {
+  display: block;
+  width: 100%;
+  background-color: #FCF5C7;
+}
+input {
+  height: 36px;
+  font-size: 24px;
+}
+textarea {
+  height: 200px;
+  font-size: 18px;
+}
+.collection-item {
+  padding-bottom: 10px;
+  height: 120px;
+}
+
       

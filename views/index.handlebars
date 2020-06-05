@@ -1,34 +1,54 @@
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper blue darken-1">
+            <a href="#" class="brand-logo">Donald Trump Fact Check</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li class="brown-text">Powered by PolitiFact</li>
+                <li><a type="button" id="scrape">Get New Fact Checks</a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+        <li>Powered by PolitiFact</li>
+        <li><a type="button" id="scrape">Get New Fact Checks</a></li>
+    </ul>
+</div>
 <div class="container">
 
-    <div class="row">
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h4 class="display-4">Donald Trump Fact Check</h4>
-                <p class="lead"></p>
-                <button type="button" class="btn btn-primary btn-lg"></button>
-            </div>
-        </div>
-    </div>
+
 
     <div class="row">
-        <ul class="collection col-7">
+        <ul class="collection col m7">
             {{#each articles}}
             <li class="collection-item avatar">
                 <img src="{{this.rating}}" alt="" class="circle">
-                <div class="title">Claim:{{this.title}} </div>
-                <button type="button" data-id={{this._id}} class="btn-small btn-secondary float-right note-btn">View
-                    Summary</button>
+                <div class="title">Claim:{{this.title}}
+                    <button type="button" data-id={{this._id}} class="btn-small blue darken-1 note-btn">View
+                        Summary</button>
+                </div>
+
             </li>
             {{/each}}
 
         </ul>
-        <div id="notes" class="col-5 pin-top" style="top:0px;">
+        <div id="notes" class="col m5 pin-top" style="top:50px;">
 
         </div>
 
     </div>
 </div>
-
+<footer class="page-footer blue darken-1">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <p class="brown-text text-lighten-3">Lee Hawkins</p>
+        </div>
+    </div>
+</footer>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

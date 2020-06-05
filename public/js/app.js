@@ -1,3 +1,15 @@
+$(document).ready(function () {
+    $('.pushpin').pushpin();
+    $('.sidenav').sidenav();
+});
+$(document).on("click","#scrape", function(){
+    $.ajax({
+        method: "GET",
+        url: "/scrape"
+    }).then(function(){
+        location.reload()
+    })
+})
 
 $(document).on("click", ".note-btn", function () {
     // Empty the notes from the note section
@@ -15,8 +27,8 @@ $(document).on("click", ".note-btn", function () {
         .then(function (data) {
             // The title of the article
             console.log(data)
-            $("#notes").append("<h5><u> Claim</u>:</h5><br><p>" + data.title + "</hp>");
-            $("#notes").append("<h5><u> Rating</u>: <img src="+data.rating+" style="+"height:50px"+"></h5><br><h5><u>Summary:</u></h5>")
+            $("#notes").append("<h5><u> Claim</u>:</h5><p>" + data.title + "</hp>");
+            $("#notes").append("<h5><u> Rating</u>: <img src="+data.rating+" style="+"height:50px"+"></h5><h5><u>Summary:</u></h5>")
 
             for (let i=0;i<data.summary.length;i++) {
                 $("#notes").append("<p>" + data.summary[i] + "</hp>");
