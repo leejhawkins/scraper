@@ -32,10 +32,11 @@ $(document).on("click", ".note-btn", function () {
             console.log(data)
             $("#notes").append("<h5><u> Claim</u>:</h5><p>" + data.title + "</hp>");
             $("#notes").append("<h5><u> Rating</u>: <img src="+data.rating+" style="+"height:50px"+"></h5><h5><u>Summary:</u></h5>")
-            $("#notes").append("<button class= 'btn-small blue darken-1' type='button' data-link='"+ data.link + "' id='link'>Link to Site</button>")
+            
             for (let i=0;i<data.summary.length;i++) {
                 $("#notes").append("<p>" + data.summary[i] + "</hp>");
             }
+            $("#notes").append("<button class= 'btn-small blue darken-1' type='button' data-link='" + data.link + "' id='link'>Link to Site</button>")
             $("#notes").append("<h5><u> Comments: </u></h5>")
             if (data.note) {
                 for (let i=0;i<data.note.length;i++) {
