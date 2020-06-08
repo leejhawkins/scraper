@@ -103,7 +103,6 @@ app.get("/scrape", function (req, res) {
 // Route for getting all Articles from the db
 app.get("/", function (req, res) {
     db.Article.find({}).sort({ date: -1 }).then(function (dbArticles) {
-        console.log(dbArticles)
         res.render("index", {
             articles: dbArticles
         })
@@ -148,13 +147,15 @@ app.get("/articles/:id", function (req, res) {
                         summary.push($(this).text())
                     }
                 });
-
+                var date = dbArticle.date.toDateString()
+                console.log(date)
                 dbArticle = {
                     _id: dbArticle._id,
                     title: dbArticle.title,
                     link: dbArticle.link,
                     note: dbArticle.note,
                     rating: dbArticle.rating,
+                    date: date,
                     summary: summary
                 }
 

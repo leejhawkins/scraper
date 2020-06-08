@@ -30,7 +30,7 @@ $(document).on("click", ".note-btn", function () {
         .then(function (data) {
             // The title of the article
             console.log(data)
-            $("#notes").append("<h5><u> Claim</u>:</h5><p>" + data.title + "</hp>");
+            $("#notes").append("<h5><u> Claim</u>:</h5><p>" + data.title + " - " + data.date+"</hp>");
             $("#notes").append("<h5><u> Rating</u>: <img src="+data.rating+" style="+"height:50px"+"></h5><h5><u>Summary:</u></h5>")
             
             for (let i=0;i<data.summary.length;i++) {
