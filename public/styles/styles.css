@@ -35,5 +35,10 @@ textarea {
   padding-bottom: 10px;
   height: 120px;
 }
+@media only screen and (max-width : 720px) {
+  a.brand-logo {
+     font-size: 20px;
+  }
+}
 
       

@@ -119,6 +119,7 @@ app.get("/articles/:id", function (req, res) {
         // ..and populate all of the notes associated with it
         .populate("note")
         .then(function (dbArticle) {
+            console.log(dbArticle)
             axios.get("https://www.politifact.com" + dbArticle.link).then(function (response) {
                 // Then, we load that into cheerio and save it to $ for a shorthand selector
 
@@ -148,7 +149,7 @@ app.get("/articles/:id", function (req, res) {
                     }
                 });
                 var date = dbArticle.date.toDateString()
-                console.log(date)
+               
                 dbArticle = {
                     _id: dbArticle._id,
                     title: dbArticle.title,
