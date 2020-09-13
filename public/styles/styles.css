@@ -1,13 +1,13 @@
  #notes {
-  padding-left: 30px;
   font-size:12px;
+  border-radius: 10px;
+  top: 55px;
 
 }
 h5 {
   font-size:24px;
 }
 .title p {
-  padding-bottom:20px;
   font-size:12px;
 }
 .note-btn {
@@ -31,10 +31,18 @@ textarea {
   height: 200px;
   font-size: 18px;
 }
-.collection-item {
-  padding-bottom: 10px;
-  height: 120px;
+li {
+  padding: 10px;
+  border-radius: 10px;
+
 }
+img.circle {
+  width: 42px;
+}
+.active {
+  border: solid 5px green;
+}
+
 @media only screen and (max-width : 720px) {
   a.brand-logo {
      font-size: 20px;

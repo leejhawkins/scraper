@@ -17,9 +17,11 @@ $(document).on("click","#link",function(){
 $(document).on("click", ".note-btn", function () {
     // Empty the notes from the note section
     $("#notes").empty();
-    // Save the id from the p tag
+    var articles = $("div #articles").find('li')
+    articles.removeClass("active")
     var thisId = $(this).attr("data-id");
     var thisLink = $(this).attr("href")
+    $(this).parent().parent().addClass("active")
 
     // Now make an ajax call for the Article
     $.ajax({
@@ -29,7 +31,6 @@ $(document).on("click", ".note-btn", function () {
         // With that done, add the note information to the page
         .then(function (data) {
             // The title of the article
-            console.log(data)
             $("#notes").append("<h5><u> Claim</u>:</h5><p>" + data.title + " - " + data.date+"</hp>");
             $("#notes").append("<h5><u> Rating</u>: <img src="+data.rating+" style="+"height:50px"+"></h5><h5><u>Summary:</u></h5>")
             

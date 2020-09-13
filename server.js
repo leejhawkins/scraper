@@ -59,9 +59,7 @@ app.get("/scrape", function (req, res) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(response.data);
             var match = false;
-            // Now, we grab every h2 within an article tag, and do the following:
             $("div.m-statement__content").each(function (i, element) {
-                // Save an empty result object
                 var result = {};
 
                 if (dbArticles[0].title === $(this).find("a").text() || match===true) {

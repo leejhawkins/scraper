@@ -22,20 +22,25 @@
 
 
     <div class="row">
-        <ul class="collection col m7">
+        <ul id="articles" class="col m6 ">
             {{#each articles}}
-            <li class="collection-item avatar">
-                <img src="{{this.rating}}" alt="" class="circle">
-                <div class="title">Claim:{{this.title}}
-                    <button type="button" data-id={{this._id}} class="btn-small blue darken-1 note-btn">View
+            <li class="row z-depth-3">
+                <div class="col s2">
+                    <img src="{{this.rating}}" alt="" class="circle">
+                </div>
+                <div class="col s7">
+                    <span>Claim:{{this.title}}</span>
+                </div>
+                <div class="col s3">
+                    <button type="button" data-id={{this._id}} class="btn-small blue darken-1 note-btn">
                         Summary</button>
                 </div>
-
             </li>
             {{/each}}
 
         </ul>
-        <div id="notes" class="col m5 pin-top" style="top:50px;">
+        <div class="col m1"></div>
+        <div id="notes" class="col m5 pin-top z-depth-3">
 
         </div>
 
