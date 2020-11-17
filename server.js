@@ -43,7 +43,7 @@ app.set("view engine", "handlebars");
 mongoose.Promise = global.Promise;
 mongoose.connect(
     process.env.MONGODB_URI ||
-    "mongodb://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@ds031995.mlab.com:31995/heroku_q3cw6k5t",
+    "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster-q3cw6k5t.qzyez.mongodb.net/heroku_q3cw6k5t?retryWrites=true&w=majority",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
